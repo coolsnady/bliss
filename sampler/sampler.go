@@ -154,8 +154,7 @@ func (sampler *Sampler) sampleBerCosh(x int32, table []uint8, ell uint32) bool {
 		if bit {
 			return true
 		}
-		bit = sampler.random.Bit()
-		if !bit {
+		if sampler.random.Bit() == 0 {
 			bit = sampler.sampleBerExp(uint32(x), table, ell)
 			if !bit {
 				return false
@@ -181,7 +180,7 @@ func (sampler *Sampler) SampleBerCosh(x int32) bool {
 // This is used as foundation of SampleGauss.
 func (sampler *Sampler) SampleBinaryGauss() uint32 {
 restart:
-	if sampler.random.Bit() {
+	if sampler.random.Bit() != 0 {
 		return 0
 	}
 	for i := 1; i <= 16; i++ {
@@ -200,7 +199,7 @@ restart:
 // exp(-x^2/(2*sigma*sigma))
 func (sampler *Sampler) sampleGauss(ksigma uint16, ksigmabits uint16, table []uint8, ell uint32) int32 {
 	var x, y uint32
-	var u bool
+	var u uint32
 	for {
 		x = sampler.SampleBinaryGauss()
 		for {
@@ -211,7 +210,7 @@ func (sampler *Sampler) sampleGauss(ksigma uint16, ksigmabits uint16, table []ui
 		}
 		e := y * (y + 2*uint32(ksigma)*x)
 		u = sampler.random.Bit()
-		if (x|y) != 0 || u {
+		if (x|y) != 0 || (u != 0) {
 			if sampler.sampleBerExp(e, table, ell) {
 				break
 			}
@@ -219,7 +218,7 @@ func (sampler *Sampler) sampleGauss(ksigma uint16, ksigmabits uint16, table []ui
 	}
 
 	valPos := int32(uint32(ksigma)*x + y)
-	if u {
+	if u != 0 {
 		return valPos
 	} else {
 		return -valPos
@@ -234,7 +233,7 @@ func (sampler *Sampler) SampleGauss() int32 {
 // exp(-x^2/(2*sigma*sigma))
 func (sampler *Sampler) sampleGaussCt(ksigma uint16, ksigmabits uint16, table []uint8, ell uint32) int32 {
 	var x, y uint32
-	var u bool
+	var u uint32
 	for {
 		x = sampler.SampleBinaryGauss()
 		for {
@@ -245,7 +244,7 @@ func (sampler *Sampler) sampleGaussCt(ksigma uint16, ksigmabits uint16, table []
 		}
 		e := y * (y + 2*uint32(ksigma)*x)
 		u = sampler.random.Bit()
-		if (x|y) != 0 || u {
+		if (x|y) != 0 || (u != 0) {
 			if sampler.sampleBerExpCt(e, table, ell) {
 				break
 			}
@@ -253,7 +252,7 @@ func (sampler *Sampler) sampleGaussCt(ksigma uint16, ksigmabits uint16, table []
 	}
 
 	valPos := int32(uint32(ksigma)*x + y)
-	if u {
+	if u != 0 {
 		return valPos
 	} else {
 		return -valPos

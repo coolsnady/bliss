@@ -123,23 +123,21 @@ func (entropy *Entropy) Char() uint8 {
 	return ret
 }
 
-func (entropy *Entropy) Bit() bool {
+func (entropy *Entropy) Bit() uint32 {
 	if entropy.bitp >= 64 {
 		entropy.refreshBitPool()
 	}
-	bit := entropy.bitpool & 1
+	bit := uint32(entropy.bitpool & 1)
 	entropy.bitpool >>= 1
 	entropy.bitp++
-	return bit == 1
+	return bit
 }
 
 func (entropy *Entropy) Bits(n int) uint32 {
 	ret := uint32(0)
 	for n > 0 {
 		ret <<= 1
-		if entropy.Bit() {
-			ret |= 1
-		}
+		ret |= entropy.Bit()
 		n--
 	}
 	return ret

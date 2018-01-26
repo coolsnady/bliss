@@ -147,8 +147,8 @@ restart:
 		goto restart
 	}
 	var z1, z2 *poly.PolyArray
-	b := entropy.Bit()
-	if b {
+	var b uint32 = entropy.Bit()
+	if b != 0 {
 		z1 = y1.Sub(v1)
 		z2 = y2.Sub(v2)
 	} else {
@@ -216,7 +216,7 @@ restart:
 	}
 	var z1, z2 *poly.PolyArray
 	b := entropy.Bit()
-	if b {
+	if b != 0 {
 		z1 = y1alpha.Sub(v1)
 		z2 = y2alpha.Sub(v2)
 		z1 = z1.Add(y1beta)
