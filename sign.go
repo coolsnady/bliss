@@ -172,6 +172,8 @@ restart:
 	if z1.Norm2()+y2.Norm2() > int32(Bl2) {
 		goto restart
 	}
+        v1.MemZero()
+        v2.MemZero()
 	return &Signature{z1, z2, indices}, nil
 }
 
@@ -247,6 +249,8 @@ restart:
 	if z1.Norm2()+y2.Norm2() > int32(Bl2) {
 		goto restart
 	}
+        v1.MemZero()
+        v2.MemZero()
 	return &Signature{z1, z2, indices}, nil
 }
 

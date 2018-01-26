@@ -69,6 +69,12 @@ func (pa *PolyArray) GetData() []int32 {
 	return pa.data
 }
 
+func (pa *PolyArray) MemZero() {
+    for i := range pa.data {
+        pa.data[i] = 0
+    }
+}
+
 func UniformPoly(version int, entropy *sampler.Entropy) *PolyArray {
 	p, err := New(version)
 	if err != nil {
