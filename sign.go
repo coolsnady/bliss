@@ -2,10 +2,10 @@ package bliss
 
 import (
 	"fmt"
-	"github.com/LoCCS/bliss/huffman"
-	"github.com/LoCCS/bliss/params"
-	"github.com/LoCCS/bliss/poly"
-	"github.com/LoCCS/bliss/sampler"
+	"github.com/hybridnetwork/bliss/huffman"
+	"github.com/hybridnetwork/bliss/params"
+	"github.com/hybridnetwork/bliss/poly"
+	"github.com/hybridnetwork/bliss/sampler"
 	"golang.org/x/crypto/sha3"
 )
 

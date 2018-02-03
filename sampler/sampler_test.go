@@ -2,7 +2,7 @@ package sampler
 
 import (
 	"fmt"
-	"github.com/LoCCS/bliss/params"
+	"github.com/hybridnetwork/bliss/params"
 	"io/ioutil"
 	"strings"
 	"testing"

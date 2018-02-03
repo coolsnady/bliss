@@ -2,8 +2,8 @@ package bliss
 
 import (
 	"fmt"
-	"github.com/LoCCS/bliss/params"
-	"github.com/LoCCS/bliss/sampler"
+	"github.com/hybridnetwork/bliss/params"
+	"github.com/hybridnetwork/bliss/sampler"
 	_ "io/ioutil"
 	"reflect"
 	_ "strconv"

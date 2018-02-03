@@ -1,7 +1,7 @@
 package params
 
 import (
-	"github.com/LoCCS/bliss/huffman"
+	"github.com/hybridnetwork/bliss/huffman"
 )
 
 const (
