@@ -2,6 +2,7 @@ package bliss
 
 import (
 	"fmt"
+
 	"github.com/hybridnetwork/bliss/huffman"
 	"github.com/hybridnetwork/bliss/params"
 	"github.com/hybridnetwork/bliss/poly"
@@ -28,27 +29,27 @@ func computeC(kappa uint32, u *poly.PolyArray, hash []byte) []uint32 {
 		hash = append(hash, byte(data[i]&0xff))
 		hash = append(hash, byte((data[i]>>8)&0xff))
 	}
-        h := sha3.NewShake256()
-        h.Write(hash)
+	h := sha3.NewShake256()
+	h.Write(hash)
 
-        index := make([]byte, 2)
-        indices_count := 0
-        for indices_count < int(kappa) {
-            h.Read(index)
-            // modulo reduction ok since n is a power of 2 (256 or 512)
-            idx :=  ( int(index[0]) << 8 + int(index[1]) ) % n
-            j := 0
-            for j = 0; j < indices_count; j++ {
-                if indices[j] == uint32(idx) {
-                    break
-                }
-            }
-            if j == indices_count {
-                indices[indices_count] = uint32(idx)
-            }
-            indices_count++
-        }
-        return indices
+	index := make([]byte, 2)
+	indicesCount := 0
+	for indicesCount < int(kappa) {
+		h.Read(index)
+		// modulo reduction ok since n is a power of 2 (256 or 512)
+		idx := (int(index[0])<<8 + int(index[1])) % n
+		j := 0
+		for j = 0; j < indicesCount; j++ {
+			if indices[j] == uint32(idx) {
+				break
+			}
+		}
+		if j == indicesCount {
+			indices[indicesCount] = uint32(idx)
+		}
+		indicesCount++
+	}
+	return indices
 }
 
 func greedySc(indices []uint32, s1, s2 *poly.PolyArray) (v1, v2 *poly.PolyArray) {
@@ -124,7 +125,7 @@ restart:
 		goto restart
 	}
 	var z1, z2 *poly.PolyArray
-	var b uint32 = entropy.Bit()
+	var b = entropy.Bit()
 	if b != 0 {
 		z1 = y1.Sub(v1)
 		z2 = y2.Sub(v2)
@@ -149,8 +150,8 @@ restart:
 	if z1.Norm2()+y2.Norm2() > int32(Bl2) {
 		goto restart
 	}
-        v1.MemZero()
-        v2.MemZero()
+	v1.MemZero()
+	v2.MemZero()
 	return &Signature{z1, z2, indices}, nil
 }
 
@@ -226,8 +227,8 @@ restart:
 	if z1.Norm2()+y2.Norm2() > int32(Bl2) {
 		goto restart
 	}
-        v1.MemZero()
-        v2.MemZero()
+	v1.MemZero()
+	v2.MemZero()
 	return &Signature{z1, z2, indices}, nil
 }
 
@@ -264,7 +265,7 @@ func (key *PublicKey) Verify(msg []byte, sig *Signature) (bool, error) {
 	indicesp := computeC(param.Kappa, v, hash[:])
 	for i := 0; i < len(indices); i++ {
 		if indices[i] != indicesp[i] {
-			return false, fmt.Errorf("Indices mismatch!")
+			return false, fmt.Errorf("indices mismatch")
 		}
 	}
 	return true, nil
@@ -313,7 +314,7 @@ func (sig *Signature) Encode() []byte {
 		for j := 0; j < 8; j++ {
 			tmp <<= 1
 			if z2data[i*8+j] > 0 {
-				tmp += 1
+				tmp++
 			}
 		}
 		// Each extra bit takes a byte array of size n/8

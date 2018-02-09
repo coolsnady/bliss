@@ -1,10 +1,11 @@
 package bliss
 
 import (
+	"fmt"
+	"testing"
+
 	"github.com/hybridnetwork/bliss/params"
 	"github.com/hybridnetwork/bliss/sampler"
-	"testing"
-	"fmt"
 )
 
 func TestDemo(t *testing.T) {
