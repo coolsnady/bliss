@@ -27,13 +27,17 @@ func NewBitPacker() *BitPacker {
 	}
 }
 
-func NewBitUnpacker(data []byte, nbit uint32) *BitUnpacker {
+func NewBitUnpacker(data []byte, nbit uint32) (*BitUnpacker, error) {
 	if int(nbit) > len(data)*8 {
-		return nil
+		return nil, fmt.Errorf("NewBitUnpacker cannot return nil: %d > %d", nbit, len(data)*8)
 	}
-	return &BitUnpacker{
+	newunpack := &BitUnpacker{
 		data, 0, 0, nbit,
 	}
+	if newunpack == nil {
+		return nil, fmt.Errorf("BitUnpacker cannot return nil")
+	}
+	return newunpack, nil
 }
 
 func (packer *BitPacker) WriteBits(code uint64, nbit uint32) error {

@@ -2,10 +2,11 @@ package bliss
 
 import (
 	"fmt"
+
+	"github.com/hybridnetwork/bliss/huffman"
 	"github.com/hybridnetwork/bliss/params"
 	"github.com/hybridnetwork/bliss/poly"
 	"github.com/hybridnetwork/bliss/sampler"
-	"github.com/hybridnetwork/bliss/huffman"
 )
 
 type PrivateKey struct {
@@ -199,7 +200,10 @@ func DeserializePrivateKey(data []byte) (*PrivateKey, error) {
 	}
 
 	n := s1.Param().N
-	unpacker := huffman.NewBitUnpacker(data[1:], 6*n)
+	unpacker, err := huffman.NewBitUnpacker(data[1:], 6*n)
+	if err != nil {
+		return nil, fmt.Errorf("Error in unpacking private key bits: %s", err.Error())
+	}
 	s1data := s1.GetData()
 	s2data := s2.GetData()
 	for i := 0; i < int(n); i++ {
@@ -266,7 +270,10 @@ func DeserializePublicKey(data []byte) (*PublicKey, error) {
 	}
 	n := a.Param().N
 	qbit := a.Param().Qbits
-	unpacker := huffman.NewBitUnpacker(data[1:], n*qbit)
+	unpacker, err := huffman.NewBitUnpacker(data[1:], n*qbit)
+	if err != nil {
+		return nil, fmt.Errorf("Error in unpacking public key bits: %s", err.Error())
+	}
 	adata := a.GetData()
 	for i := 0; i < int(n); i++ {
 		bits, err := unpacker.ReadBits(qbit)

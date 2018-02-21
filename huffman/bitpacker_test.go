@@ -54,8 +54,8 @@ func TestWriteRead(t *testing.T) {
 		for i := 0; i < len(data); i++ {
 			fmt.Printf("%d: %02x\n", i, d[i])
 		}*/
-	unpacker := NewBitUnpacker(packer.Data(), packer.Size())
-	if unpacker == nil {
+	unpacker, err := NewBitUnpacker(packer.Data(), packer.Size())
+	if err != nil {
 		t.Errorf("Error in creating unpacker")
 		return
 	}

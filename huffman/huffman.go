@@ -34,9 +34,13 @@ func NewHuffmanEncoder(code *HuffmanCode) *HuffmanEncoder {
 	return &HuffmanEncoder{NewBitPacker(), code}
 }
 
-func NewHuffmanDecoder(code *HuffmanCode, data []byte) *HuffmanDecoder {
+func NewHuffmanDecoder(code *HuffmanCode, data []byte) (*HuffmanDecoder, error) {
 	size := uint32(data[0])*256 + uint32(data[1])
-	return &HuffmanDecoder{NewBitUnpacker(data[2:], size), code}
+	bitunpack, err := NewBitUnpacker(data[:2], size)
+	if err != nil {
+		return nil, fmt.Errorf("Error in unpacking for huffman: %v", bitunpack, err.Error())
+	}
+	return &HuffmanDecoder{bitunpack, code}, nil
 }
 
 func (code *HuffmanCode) Size() int {
