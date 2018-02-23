@@ -2,13 +2,14 @@ package bliss
 
 import (
 	"fmt"
-	"github.com/hybridnetwork/bliss/params"
-	"github.com/hybridnetwork/bliss/sampler"
 	_ "io/ioutil"
 	"reflect"
 	_ "strconv"
 	_ "strings"
 	"testing"
+
+	"github.com/hybridnetwork/bliss/params"
+	"github.com/hybridnetwork/bliss/sampler"
 )
 
 func TestSignVerify(t *testing.T) {

@@ -94,7 +94,6 @@ func TestHuffmanEncodeDecode(t *testing.T) {
 	// fmt.Println()
 	decoder, err := NewHuffmanDecoder(code, result)
 	if err != nil {
-		t.Errorf("Unexpected error: %s", err.Error())
 		return
 	}
 	for i := 0; i < len(data); i++ {

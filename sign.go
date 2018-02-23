@@ -16,6 +16,12 @@ type Signature struct {
 	c  []uint32
 }
 
+// MaxSignatureSize is the largest size of an encoded BLISS signature.
+const MaxSignatureSize = 860
+
+// MinSignatureSize is the smallest size of an encoded BLISS signature.
+const MinSignatureSize = 397
+
 func (sig *Signature) String() string {
 	return fmt.Sprintf("{z1:%s,z2:%s,c:%d}",
 		sig.z1.String(), sig.z2.String(), sig.c)
@@ -434,6 +440,10 @@ func (sig *Signature) Serialize() []byte {
 }
 
 func DeserializeBlissSignature(data []byte) (*Signature, error) {
+	if len(data) < MinSignatureSize || len(data) > MaxSignatureSize {
+		return nil, fmt.Errorf("bad signature size: have %v, want between %v and %v",
+			len(data), MinSignatureSize, MaxSignatureSize)
+	}
 	z1, err := poly.New(int(data[0]))
 	if err != nil {
 		return nil, fmt.Errorf("Error in generating new polyarray: %s", err.Error())
