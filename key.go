@@ -200,10 +200,7 @@ func DeserializePrivateKey(data []byte) (*PrivateKey, error) {
 	}
 
 	n := s1.Param().N
-	unpacker, err := huffman.NewBitUnpacker(data[1:], 6*n)
-	if err != nil {
-		return nil, fmt.Errorf("Error in unpacking private key bits: %s", err.Error())
-	}
+	unpacker := huffman.NewBitUnpacker(data[1:], 6*n)
 	s1data := s1.GetData()
 	s2data := s2.GetData()
 	for i := 0; i < int(n); i++ {
@@ -270,10 +267,7 @@ func DeserializePublicKey(data []byte) (*PublicKey, error) {
 	}
 	n := a.Param().N
 	qbit := a.Param().Qbits
-	unpacker, err := huffman.NewBitUnpacker(data[1:], n*qbit)
-	if err != nil {
-		return nil, fmt.Errorf("Error in unpacking public key bits: %s", err.Error())
-	}
+	unpacker := huffman.NewBitUnpacker(data[1:], n*qbit)
 	adata := a.GetData()
 	for i := 0; i < int(n); i++ {
 		bits, err := unpacker.ReadBits(qbit)

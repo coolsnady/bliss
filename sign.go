@@ -470,12 +470,12 @@ func DeserializeBlissSignature(data []byte) (*Signature, error) {
 	csrc := data[1+lowsize : 1+lowsize+csize]
 	z1z2 := data[1+lowsize+csize:]
 
-	decoder, err := huffman.NewHuffmanDecoder(code, z1z2)
-	if err != nil {
+	decoder := huffman.NewHuffmanDecoder(code, z1z2)
+	if decoder == nil {
 		return nil, fmt.Errorf("Error in decoding huffman: %s", err.Error())
 	}
-	zunpacker, err := huffman.NewBitUnpacker(lowsrc, 9*n)
-	if err != nil {
+	zunpacker := huffman.NewBitUnpacker(lowsrc, 9*n)
+	if zunpacker == nil {
 		return nil, fmt.Errorf("Error in unpacking z: %s", err.Error())
 	}
 	for i := 0; i < int(n); i++ {
@@ -502,10 +502,7 @@ func DeserializeBlissSignature(data []byte) (*Signature, error) {
 		z2data[i] = z2
 	}
 
-	cunpacker, err := huffman.NewBitUnpacker(csrc, nbit*kappa)
-	if err != nil {
-		return nil, fmt.Errorf("Error in unpacking c: %s", err.Error())
-	}
+	cunpacker := huffman.NewBitUnpacker(csrc, nbit*kappa)
 	for i := 0; i < int(kappa); i++ {
 		bits, err := cunpacker.ReadBits(nbit)
 		if err != nil {

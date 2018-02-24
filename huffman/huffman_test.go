@@ -92,10 +92,7 @@ func TestHuffmanEncodeDecode(t *testing.T) {
 	// 	fmt.Printf("%02x ", result[i])
 	// }
 	// fmt.Println()
-	decoder, err := NewHuffmanDecoder(code, result)
-	if err != nil {
-		return
-	}
+	decoder := NewHuffmanDecoder(code, result)
 	for i := 0; i < len(data); i++ {
 		next, err := decoder.Next()
 		if err != nil {
