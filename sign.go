@@ -3,10 +3,10 @@ package bliss
 import (
 	"fmt"
 
-	"github.com/hybridnetwork/bliss/huffman"
-	"github.com/hybridnetwork/bliss/params"
-	"github.com/hybridnetwork/bliss/poly"
-	"github.com/hybridnetwork/bliss/sampler"
+	"github.com/coolsnady/bliss/huffman"
+	"github.com/coolsnady/bliss/params"
+	"github.com/coolsnady/bliss/poly"
+	"github.com/coolsnady/bliss/sampler"
 	"golang.org/x/crypto/sha3"
 )
 

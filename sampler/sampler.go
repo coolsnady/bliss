@@ -2,7 +2,7 @@ package sampler
 
 import (
 	"fmt"
-	"github.com/hybridnetwork/bliss/params"
+	"github.com/coolsnady/bliss/params"
 )
 
 type Sampler struct {
