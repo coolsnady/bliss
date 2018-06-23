@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/hybridnetwork/bliss/params"
-	"github.com/hybridnetwork/bliss/sampler"
+	"github.com/coolsnady/bliss/params"
+	"github.com/coolsnady/bliss/sampler"
 )
 
 func TestDemo(t *testing.T) {
